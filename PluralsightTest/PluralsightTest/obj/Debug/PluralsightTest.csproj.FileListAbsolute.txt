@@ -1,0 +1,2 @@
+C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\obj\Debug\PluralsightTest.csprojResolveAssemblyReference.cache
+C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\obj\Debug\PluralsightTest.csproj.CoreCompileInputs.cache
