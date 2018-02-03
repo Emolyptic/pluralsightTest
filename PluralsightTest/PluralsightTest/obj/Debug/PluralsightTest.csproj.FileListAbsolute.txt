@@ -1,2 +1,7 @@
 C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\obj\Debug\PluralsightTest.csprojResolveAssemblyReference.cache
 C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\obj\Debug\PluralsightTest.csproj.CoreCompileInputs.cache
+C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\bin\Debug\PluralsightTest.exe.config
+C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\bin\Debug\PluralsightTest.exe
+C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\bin\Debug\PluralsightTest.pdb
+C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\obj\Debug\PluralsightTest.exe
+C:\Users\HulseFamily\Desktop\PluralSight_Test\PluralsightTest\PluralsightTest\obj\Debug\PluralsightTest.pdb
