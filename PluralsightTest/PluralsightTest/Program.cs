@@ -22,6 +22,7 @@ namespace PluralsightTest
     {
         static void Main(string[] args)
         {
+            //List given in instructions
             string[] validOne = new string[]
                 {
                 "KittenService: ",
@@ -31,7 +32,13 @@ namespace PluralsightTest
                 "Fraudstream: Leetmeme",
                 "Ice: "
                 };
-
+            //Short List given in instructions
+            string[] validTwo = new string[]
+            {
+                "KittenService: CamelCaser",
+                "CamelCaser: "
+            };
+            //Invalid cycle given in instructions
             string[] invalidOne = new string[]
             {
             "KittenService: ",
@@ -41,7 +48,20 @@ namespace PluralsightTest
             "Fraudstream: ",
             "Ice: Leetmeme"
             };
-            
+            //Invalid list given one entry doesn't have necesary data
+            string[] invalidTwo = new string[]
+            {
+            "KittenService: ",
+            "Leetmeme: Cyberportal",
+            "Cyberportal: Ice",
+            ": KittenService",
+            "Fraudstream: Leetmeme",
+            "Ice: "
+            };
+            //Invalid List Empty List
+            string[] invalidThree = new string[]
+            {
+            };
             //Test
             // Cycle;
             // Large Cycle;
@@ -49,27 +69,42 @@ namespace PluralsightTest
             // One element
             // 
 
-            string output = createDependencyList(validOne);
+            readOutput(createDependencyList(validOne));
+            readOutput(createDependencyList(validTwo));
 
-            Console.Write(output);
+            readOutput(createDependencyList(invalidOne));
+            readOutput(createDependencyList(invalidTwo));
+            readOutput(createDependencyList(invalidThree));
+
             Console.ReadLine();
+        }
+
+        public static void readOutput(string x)
+        {
+            Console.WriteLine(x);
+            Console.WriteLine("\n");
         }
         public static string createDependencyList(string[] test)
         {
-            //Dictionary<string, string> dependencies = new Dictionary<string, string>();
-            //List<string> programs = new List<string>();
-            //List<string> dependents = new List<string>();
+            //Empty Test
+            if(test.Length == 0)
+            {
+                return "ERROR: Invalid Empty List";
+            }
             List<node> graph = new List<node>();
-
             List<string> noDep = new List<string>();
-
             string final = "";
 
             //Create two strings one of programs and one of their dependents
             for (int i = 0; i < test.Length; i++)
             {
                 string[] temp = test[i].Split(':');
-             
+
+                //Error check if no program has been entered making entry invalid
+                if(temp[0].Trim() == "")
+                {
+                    return "ERROR: Program not found. Fix List";
+                }
                 //Find all that don't have dependents.
                 if (temp[1].Trim() == "")
                 {
@@ -81,20 +116,8 @@ namespace PluralsightTest
                 }
             }
 
-            //Look for dependents(values) that are not in the programs
-            // foreach(Node entry in graph)
-            //{
-            //    if(!graph.Contains(.ContainsKey(entry.Value))
-            //     {
-            //         noEdges.Add(entry.Value);
-            //         dependencies.Remove(entry.Key);
-            //     }
-            // }
-            Console.WriteLine(noDep.Count);
             while(noDep.Count != 0)
             {
-                Console.Write(noDep.Count);
-                Console.Write("\n");
                 //Grab front string from no Edge List
                 string popped = noDep[0];
                 noDep.Remove(popped);
@@ -115,13 +138,8 @@ namespace PluralsightTest
 
             if(graph.Count > 0)
             {
-                Console.WriteLine(final);
-                Console.WriteLine("\n");
-                Console.WriteLine(graph.Count);
                 return "ERROR: DEPENDENCY CYCLES";
             }
-
-
                 return final;
         }
 
