@@ -6,6 +6,16 @@ using System.Threading.Tasks;
 
 namespace PluralsightTest
 {
+    public class Node
+    {
+        public string program;
+        public string dependency;
+        public Node(string pro, string dep)
+        {
+            program = pro;
+            dependency = dep;
+        }
+    }
     class Program
     {
         static void Main(string[] args)
@@ -20,16 +30,25 @@ namespace PluralsightTest
                 "Ice: "
                 };
 
+            //Test
+            // Cycle;
+            // Large Cycle;
+            // Doesn't have a program before the :
+            // One element
+            // 
+
             string output = createDependencyList(testArray);
 
             Console.ReadLine();
         }
         public static string createDependencyList(string[] test)
         {
-            List<string> programs = new List<string>();
-            List<string> dependents = new List<string>();
+            //Dictionary<string, string> dependencies = new Dictionary<string, string>();
+            //List<string> programs = new List<string>();
+            //List<string> dependents = new List<string>();
+            List<Node> graph = new List<Node>();
 
-            List<string> noEdges = new List<string>();
+            List<string> noDep = new List<string>();
 
             string final = "";
 
@@ -37,38 +56,49 @@ namespace PluralsightTest
             for (int i = 0; i < test.Length; i++)
             {
                 string[] temp = test[i].Split(':');
-                programs.Add(temp[0].Trim());
-                dependents.Add(temp[1].Trim());
-
+             
                 //Find all that don't have dependents.
-                if (temp[1] == " ")
+                if (temp[1].Trim() == " ")
                 {
-                    noEdges.Add(temp[0]);
+                    noDep.Add(temp[0].Trim());
+                }
+                else
+                {
+                    graph.Add(new Node(temp[0].Trim(), temp[1].Trim()));
                 }
             }
 
-            //Look for dependents that are not in the programs
-            for (int y = 0; y < dependents.Count(); y++)
-            {
-                if(!programs.Contains(dependents[y]))
-                {
-                    noEdges.Add(dependents[y]);
-                }
-            }
+            //Look for dependents(values) that are not in the programs
+           // foreach(Node entry in graph)
+            //{
+            //    if(!graph.Contains(.ContainsKey(entry.Value))
+           //     {
+           //         noEdges.Add(entry.Value);
+           //         dependencies.Remove(entry.Key);
+           //     }
+           // }
 
-            while(noEdges.Count != 0)
+            while(noDep.Count != 0)
             {
-                //Remove from no Edge List
-                string popped = noEdges[0];
+                //Grab front string from no Edge List
+                string popped = noDep[0];
+                noDep.Remove(popped);
 
                 //Add to Dependency Final List
                 final += popped;
 
-               
-
+                foreach(Node x in graph)
+                {
+                    //Go through graph and find those that have a dependency on the popped 
+                    if(x.dependency == popped)
+                    {
+                        noDep.Add(x.program);
+                        graph.Remove(x);
+                    }
+                }
             }
 
-
+            
 
 
                 return "done";
