@@ -38,6 +38,18 @@ namespace PluralsightTest
                 "KittenService: CamelCaser",
                 "CamelCaser: "
             };
+            //Large String
+            string[] validThree = new string[]
+            {
+                "Earth: Fire",
+                "Fire: Wind",
+                "Wind: Water",
+                "Water: Heart",
+                "Heart: Captain",
+                "Captain: Save",
+                "Save: "
+            };
+
             //Invalid cycle given in instructions
             string[] invalidOne = new string[]
             {
@@ -62,21 +74,52 @@ namespace PluralsightTest
             string[] invalidThree = new string[]
             {
             };
-            //Test
-            // Cycle;
-            // Large Cycle;
-            // Doesn't have a program before the :
-            // One element
-            // 
+            //Invalid List Program has itself as Dependency
+            string[] invalidFour = new string[]
+            {
+                "KittenService: ",
+                "Leetmeme: Ice",
+                "Cyberportal: Cyberportal",
+                "CamelCaser: KittenService",
+                "Fraudstream: Leetmeme",
+                "Ice: "
+            };
+            //Invalid List missing : 
+            string[] invalidFive = new string[]
+                {
+                "KittenService: ",
+                "Leetmeme Cyberportal",
+                "Cyberportal: Ice",
+                "CamelCaser: KittenService",
+                "Fraudstream: Leetmeme",
+                "Ice: "
+                };
 
+            string[] invalidSix = new string[]
+                {
+                "KittenService: ",
+                "Leetmeme: Cyberportal",
+                "Leetmeme: Ice",
+                "Cyberportal: Ice",
+                "CamelCaser: KittenService",
+                "Fraudstream: Leetmeme",
+                "Ice: "
+                };
+
+            //Run Tests
             readOutput(createDependencyList(validOne));
             readOutput(createDependencyList(validTwo));
+            readOutput(createDependencyList(validThree));
 
             readOutput(createDependencyList(invalidOne));
             readOutput(createDependencyList(invalidTwo));
             readOutput(createDependencyList(invalidThree));
+            readOutput(createDependencyList(invalidFour));
+            readOutput(createDependencyList(invalidFive));
+            readOutput(createDependencyList(invalidSix));
 
             Console.ReadLine();
+
         }
 
         public static void readOutput(string x)
@@ -98,6 +141,15 @@ namespace PluralsightTest
             //Create two strings one of programs and one of their dependents
             for (int i = 0; i < test.Length; i++)
             {
+                //Validate string
+                if(!test[i].Contains(':'))
+                {
+                    return "ERROR: String does not contain ':' separator";
+                }
+
+                //
+                //SPLIT ARRAY
+                //
                 string[] temp = test[i].Split(':');
 
                 //Error check if no program has been entered making entry invalid
@@ -105,7 +157,8 @@ namespace PluralsightTest
                 {
                     return "ERROR: Program not found. Fix List";
                 }
-                //Find all that don't have dependents.
+
+                //Find all that don't have dependents. Else add them to our graph
                 if (temp[1].Trim() == "")
                 {
                     noDep.Add(temp[0].Trim());
@@ -114,7 +167,17 @@ namespace PluralsightTest
                 {
                     graph.Add(new node(temp[0].Trim(), temp[1].Trim()));
                 }
+
+                //Check if multiple programs of same name are found
+                if (graph.Count(x => x.program == temp[0]) > 1)
+                {
+                    return "ERROR: Multiple programs with different dependencies found";
+                }
+
+                
             }
+
+            
 
             while(noDep.Count != 0)
             {
@@ -140,7 +203,8 @@ namespace PluralsightTest
             {
                 return "ERROR: DEPENDENCY CYCLES";
             }
-                return final;
+            final =  final.Substring(0, (final.Length - 2));
+            return final;
         }
 
     }
